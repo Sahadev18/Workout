@@ -3,12 +3,16 @@ require('dotenv').config();
 const express = require('express');
 const workoutRoutes = require('./routes/workoutRouter');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 // express apps
 const app = express();
 
 // middleware
 app.use(express.json());
+app.use(cors({
+    origin: 'http://localhost:5173',
+  }));
 app.use((req, res, next) => {
     console.log(req.path, req.method);
     next();
@@ -37,14 +41,3 @@ const start = async () => {
 }
 
 start();
-
-// mongoose.connect(process.env.MONGO_URI)
-// .then(() => {
-//     // listen for requests
-//     app.listen(process.env.PORT, () => {
-//         console.log("Connected to the DB and applicaiton is running on port ", process.env.PORT);
-//     });
-// })
-// .catch((error) => {
-//     console.log(error);
-// });
